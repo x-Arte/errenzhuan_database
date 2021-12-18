@@ -253,3 +253,12 @@ footer {
 
 .footer-copyright a { color: #888; border-bottom: 1px solid #ddd; }
 .footer-copyright a:hover, .footer-copyright a:focus { color: #888; border: 0; }
+
+
+.admin-login-text {
+	color: white;
+}
+
+.admin-login-text:hover {
+	color: #5cb85c;
+}
