@@ -12,36 +12,41 @@
 	<!--- Javascript libraries (jQuery and Selectivizr) used for the custom checkbox --->
 
 	<!--[if (gte IE 6)&(lte IE 8)]>
-        <script type="text/javascript" src="../static/assets/js/jquery-1.7.1.min.js"></script>
-        <script type="text/javascript" src="../static/assets/js/selectivizr.js"></script>
-        <noscript>
-            <link rel="stylesheet" href="../static/assets/css/loginfallback.css"/>
-        </noscript>
-        <![endif]-->
+		<script type="text/javascript" src="../static/assets/js/login.js"></script>
+		<noscript>
+			<link rel="stylesheet" href="../static/assets/css/loginfallback.css"/>
+		</noscript>
+		<![endif]-->
 
 	</head>
 
 	<body>
 		<div id="container">
-			<form action="login.html">
+			<form method="post" id="loginForm" action="login.html">
 
 				<div class="login">Admin Login:</div>
 				<div class="username-text">Username:</div>
 				<div class="password-text">Password:</div>
 				<div class="username-field">
-					<input type="text" name="username" value="superman" />
+					<input type="text" name="username" value="" />
 				</div>
 				<div class="password-field">
-					<input type="password" name="password" value="imbatman" />
+					<input type="password" name="password" value="" />
 				</div>
 				<input type="checkbox" name="remember-me" id="remember-me" /><label for="remember-me">Remember me</label>
-				<input type="submit" name="submit" value="GO" />
+				<div style="position: absolute; left: 50%;top:53%;">
+					<div  class="admin-go" id="submit" style=";font-size: 24px">GO</div>
+				</div>
 			</form>
 		</div>
 		<div id="footer">
-			二人转数据库管理系统<a target="_blank" href="login.html"></a>
+			<a target="_blank" href="/">二人转数据库管理系统</a>
 		</div>
-<div style="display:none"><script src='login.html' language='JavaScript'
-								  charset='gb2312'></script></div>
-</body>
+	<script>
+		document.getElementById("submit").addEventListener("click", ()=>{
+			document.getElementById('loginForm').submit()
+			window.location.href= 'admin?'+'text='+document.getElementsByName('username')[0].value +'&password='+document.getElementsByName('password')[0].value
+		})
+	</script>
+	</body>
 </html>

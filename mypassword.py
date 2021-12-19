@@ -4,7 +4,7 @@
 # Time: 2021/12/13
 # 说明：
 
-pwd='123456'
+pwd='0urDimension!'
 pics=[
     {'path': 'static/images/笑转东北情.jpeg','Title': '笑转东北情'},
     {'path': 'static/images/美人杯.jpeg','Title': '美人杯'},
