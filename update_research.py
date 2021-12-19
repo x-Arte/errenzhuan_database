@@ -38,7 +38,7 @@ def login_page():
 
 @app.route('/api/getAll')
 def getAll():
-    return getAllData()
+    return getAllData()  # :please return {list:[{id:id,title:title,url:path}]}
 
 
 @app.route('/search', methods=['POST', 'GET'])
@@ -73,43 +73,43 @@ def real_login():
     return render_template('admin.html', username=administrator_name)  # 进入登录后的界面
 
 
-#改，编辑
-#可更新除id外的所有内容
+# 改，编辑
+# 可更新除id外的所有内容
 @app.route('/edit/<int:Recource_id>', methods=['GET', 'POST'])
 def index(Recource_id):
     db.reflect()
-    all_table = {table_obj.name: table_obj for table_obj in db.get_tables_for_bind()}#获取数据库所有表名
-    Recources = db.session.query(all_table['recources'])#得到resource表
-    #Resource = Recources.query.filter_by(id_resources=Recource_id).all()#找到要编辑的资源内容
+    all_table = {table_obj.name: table_obj for table_obj in db.get_tables_for_bind()}  # 获取数据库所有表名
+    Recources = db.session.query(all_table['recources'])  # 得到resource表
+    # Resource = Recources.query.filter_by(id_resources=Recource_id).all()#找到要编辑的资源内容
     Resource = recources.query.filter_by(id_resources=Recource_id)
     if request.method == 'POST':  # 判断是否是 POST 请求
         # 获取表单数据
-        #dict_show = {}
+        # dict_show = {}
         type = request.form.get('type')  # 传入表单对应输入字段的 name 值
         path = request.form.get('path')
         content = request.form.get('content')
         Title = request.form.get('title')
-        Author=request.form.get(' Author')
-        Version =request.form.get('Version')
-        Publication =request.form.get('Publication')
-        Date= request.form.get('Date')
-        Description =request.form.get(' Description')
-        Keyword =request.form.get(' Keyword')
-        Form =request.form.get(' Form')
-        Format= request.form.get('Format')
-        Language =request.form.get(' Language')
-        Audience= request.form.get( 'Audience')
+        Author = request.form.get(' Author')
+        Version = request.form.get('Version')
+        Publication = request.form.get('Publication')
+        Date = request.form.get('Date')
+        Description = request.form.get(' Description')
+        Keyword = request.form.get(' Keyword')
+        Form = request.form.get(' Form')
+        Format = request.form.get('Format')
+        Language = request.form.get(' Language')
+        Audience = request.form.get('Audience')
         origin = request.form.get('origin')
-        Link =request.form.get('  Link')
-        Authority =request.form.get('Authority')
-        Coverage=request.form.get(' Coverage')
-        Source=request.form.get(' Source')
-        Collection=request.form.get(' Collection')
-        processing=request.form.get('processing')
-        service=request.form.get('service')
-        acceptance=request.form.get('acceptance')
+        Link = request.form.get('  Link')
+        Authority = request.form.get('Authority')
+        Coverage = request.form.get(' Coverage')
+        Source = request.form.get(' Source')
+        Collection = request.form.get(' Collection')
+        processing = request.form.get('processing')
+        service = request.form.get('service')
+        acceptance = request.form.get('acceptance')
         alternative_title = request.form.get('alternative_title')
-        parallel_title= request.form.get(' parallel_title')
+        parallel_title = request.form.get(' parallel_title')
         other_title_information = request.form.get('  other_title_information')
         parallel_series_title = request.form.get(' parallel_series_title')
         series_total = request.form.get('series_total')
@@ -125,32 +125,32 @@ def index(Recource_id):
         produce_place = request.form.get(' produce_place')
         produce_people = request.form.get(' produce_people')
         photo_date = request.form.get('photo_date')
-        record_date_vedio= request.form.get('record_date_vedio')
+        record_date_vedio = request.form.get('record_date_vedio')
         record_date_movie = request.form.get('record_date_movie')
         publication_date = request.form.get('publication_date')
         up_date = request.form.get('up_date')
         create_date = request.form.get('create_date')
         summary = request.form.get('summary')
         content = request.form.get('content')
-        reward= request.form.get('reward')
+        reward = request.form.get('reward')
         singing_style = request.form.get('singing_style')
-        music_part= request.form.get('music_part')
+        music_part = request.form.get('music_part')
         singing_form = request.form.get('singing_form')
         playing_form = request.form.get('playing_form')
         additional_type = request.form.get('additional_type')
         additional_des = request.form.get('additional_des')
         channel_id = request.form.get(' channel_id')
-        channel_content= request.form.get('channel_content')
+        channel_content = request.form.get('channel_content')
         note = request.form.get(' note')
         finding_route = request.form.get(' finding_route')
-        show_type= request.form.get(' show_type')
+        show_type = request.form.get(' show_type')
         show_form = request.form.get('show_form')
         number = request.form.get('number')
         size = request.form.get('size')
         time = request.form.get('time')
         enter_point = request.form.get('enter_point')
         standard = request.form.get('standard')
-        width_height= request.form.get(' width_height')
+        width_height = request.form.get(' width_height')
         voice_character = request.form.get('voice_character')
         color = request.form.get(' color')
         subtitle_form = request.form.get(' subtitle_form')
@@ -159,7 +159,7 @@ def index(Recource_id):
         voice_quality = request.form.get('voice_quality')
         picture_quality = request.form.get('picture_quality')
         audio_programming_format = request.form.get(' audio_programming_format')
-        audio_data_ratio= request.form.get('audio_data_ratio')
+        audio_data_ratio = request.form.get('audio_data_ratio')
         audio_frequency = request.form.get(' audio_frequency')
         audio_depth = request.form.get(' audio_depth')
         movie_programming_format = request.form.get(' movie_programming_format')
@@ -167,41 +167,41 @@ def index(Recource_id):
         movie_data_ratio = request.form.get('movie_data_ratio')
         document_format = request.form.get('document_format')
         channel_language = request.form.get('channel_language')
-        subtitle_id= request.form.get('subtitle_id')
+        subtitle_id = request.form.get('subtitle_id')
         subtitle_language = request.form.get('subtitle_language')
-        obtain_way= request.form.get('obtain_way')
+        obtain_way = request.form.get('obtain_way')
         provider = request.form.get('provider')
-        origin_version= request.form.get('origin_version')
+        origin_version = request.form.get('origin_version')
         other_version = request.form.get('other_version')
         include = request.form.get('include')
         being_included = request.form.get('being_included')
-        reference= request.form.get('reference')
+        reference = request.form.get('reference')
         being_refered = request.form.get(' being_refered')
         copyright_owner = request.form.get('copyright_owner')
-        copyright_shengming= request.form.get(' copyright_shengming')
-        authorization_user= request.form.get(' authorization_user')
-        authorization_usage= request.form.get(' authorization_usage')
+        copyright_shengming = request.form.get(' copyright_shengming')
+        authorization_user = request.form.get(' authorization_user')
+        authorization_usage = request.form.get(' authorization_usage')
         authorization_date = request.form.get('authorization_date')
         authorization_period = request.form.get('authorization_period')
-        authorization_place= request.form.get('authorization_place')
+        authorization_place = request.form.get('authorization_place')
         authorization_doc = request.form.get(' authorization_doc')
         authorization_others = request.form.get('authorization_others')
         time_coverage = request.form.get(' time_coverage')
-        space_coverage= request.form.get(' space_coverage')
+        space_coverage = request.form.get(' space_coverage')
         collection_place = request.form.get(' collection_place')
         collection_company = request.form.get('collection_company')
         call_number = request.form.get('call_number')
-        zhengji_people= request.form.get('zhengji_people')
+        zhengji_people = request.form.get('zhengji_people')
         processing_unit = request.form.get('processing_unit')
-        service_way= request.form.get('service_way')
-        service_section= request.form.get('service_section')
+        service_way = request.form.get('service_way')
+        service_section = request.form.get('service_section')
         service_time = request.form.get(' service_time')
-        service_address= request.form.get('service_address')
+        service_address = request.form.get('service_address')
         service_object = request.form.get(' service_object')
-        acceptance_time= request.form.get('acceptance_time')
-        acceptance_way= request.form.get('acceptance_way')
+        acceptance_time = request.form.get('acceptance_time')
+        acceptance_way = request.form.get('acceptance_way')
         acceptance_people = request.form.get('acceptance_people')
-        acceptance_advice= request.form.get('acceptance_advice')
+        acceptance_advice = request.form.get('acceptance_advice')
         acceptance_report = request.form.get('acceptance_report')
 
         # 验证数据
@@ -209,24 +209,23 @@ def index(Recource_id):
         #     flash('Invalid input.')  # 显示错误提示
         #     return redirect(url_for('index'))  # 重定向回主页
 
-
-        #若传入不为空，则更新
+        # 若传入不为空，则更新
         if type is not None:
-            Resource.update({'type_resources':  type})  #
+            Resource.update({'type_resources': type})  #
         if path is not None:
-            Resource.update({'path_resources':  path})  #
+            Resource.update({'path_resources': path})  #
         if content is not None:
             Resource.update({'content_resources': content})  #
         if Title is not None:
-            Resource.update({'title_resources':  Title})  #
+            Resource.update({'title_resources': Title})  #
         if Author is not None:
-            Resource.update({'author_resources':  Author})  #
+            Resource.update({'author_resources': Author})  #
         if Version is not None:
             Resource.update({'version_resources': Version})  #
         if Publication is not None:
-            Resource.update({'publication_resources':  Publication}) #
+            Resource.update({'publication_resources': Publication})  #
         if Date is not None:
-            Resource.update({'date_resources ': Date }) #
+            Resource.update({'date_resources ': Date})  #
         if Description is not None:
             Resource.update({'description_resources ': Description})  #
         if Keyword is not None:
@@ -238,17 +237,17 @@ def index(Recource_id):
         if Language is not None:
             Resource.update({'language_resources ': Language})  #
         if Audience is not None:
-            Resource.update({'audience_resources':  Audience})  #
+            Resource.update({'audience_resources': Audience})  #
         if Link is not None:
-            Resource.update({'link_resources':  Link})  #
-        if  origin is not None:
+            Resource.update({'link_resources': Link})  #
+        if origin is not None:
             Resource.update({'origin_resources': origin})  #
-        if  Authority is not None:
-            Resource.update({'authority_resources':  Authority})  #
+        if Authority is not None:
+            Resource.update({'authority_resources': Authority})  #
         if Coverage is not None:
-            Resource.update({'coverage_resources':  Coverage}) #
+            Resource.update({'coverage_resources': Coverage})  #
         if Source is not None:
-            Resource.update({'source_carrier ': Source }) #
+            Resource.update({'source_carrier ': Source})  #
         if Collection is not None:
             Resource.update({'collection_information ': Description})  #
         if processing is not None:
@@ -258,13 +257,12 @@ def index(Recource_id):
         if acceptance is not None:
             Resource.update({'resource_service ': acceptance})  #
 
-
-        if alternative_title is not None:###################3
+        if alternative_title is not None:  ###################3
             Resource.update({'alternative_title': alternative_title})  #
         if parallel_title is not None:
             Resource.update({'parallel_title': parallel_title})  #
         if other_title_information is not None:
-            Resource.update({'other_title_information':other_title_information})  #
+            Resource.update({'other_title_information': other_title_information})  #
         if parallel_series_title is not None:
             Resource.update({'parallel_series_title': parallel_series_title})  #
         if series_total is not None:
@@ -450,8 +448,7 @@ def index(Recource_id):
         if acceptance_report is not None:
             Resource.update({'acceptance_report ': acceptance_report})  #
 
-        db.session.commit()  #提交改动
+        db.session.commit()  # 提交改动
         flash('Item edit.')  # 显示成功创建的提示
         return {'success': True}  # 重定向回主页
     return {'success': False}
-
