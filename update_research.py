@@ -31,11 +31,12 @@ def login_page():
 @app.route('/api/getAll')
 def getAll():
     results = []
-    for id_resources,title_resources,path_resources in db.session.query(recources.id_resources,recources.title_resources,recources.path_resources).order_by(recources.id_resources):
+    for id,title,path,type in db.session.query(recources.id_resources,recources.title_resources,recources.path_resources,recources.type_resources).order_by(recources.id_resources):
         tmp = {}
-        tmp['id'] = id_resources
-        tmp['name'] = title_resources
-        tmp['url'] = path_resources
+        tmp['id'] = id
+        tmp['name'] = title
+        tmp['url'] = path
+        tmp['type'] = type
         #print(tmp)
         results.append(tmp)
     res = {'list': results}
@@ -53,7 +54,7 @@ def search():
     for result in results:
         if result.type_resources == '图片':
             result.path_resources = 'static/images/'+ result.path_resources.split('\\')[-1]
-            # print(result.path_resources)
+            print(result.path_resources)
     return render_template('search.html',results=results)
 
 @app.route('/admin')  # 对应登陆界面

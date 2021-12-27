@@ -101,8 +101,9 @@
                             console.log(data)
                             for (let i = 0; i < data.length; i++) {
                                 table += (i % 2 === 1 ? head1 : head2)
-                                table += '<span style="width: 28%;height: 100%;margin: 10px auto">' + '<input class="input" id="name' + i + '" style="margin: 0 auto" value=\"' + data[i].name + '\"/>' + '</span>'
-                                table += '<span style="width: 28%;height: 100%;margin: auto">' + '<input class="input" id="url' + i + '" value=\"' + data[i].url + '\"/>' + '</span>'
+                                table += '<span style="width: 20%;height: 100%;margin: 10px auto">' + '<input class="input" id="name' + i + '" style="margin: 0 auto" value=\"' + data[i].name + '\"/>' + '</span>'
+                                table += '<span style="width: 20%;height: 100%;margin: auto">' + '<input class="input" id="url' + i + '" value=\"' + data[i].url + '\"/>' + '</span>'
+                                table += '<span style="width: 10%;height: 100%;margin: auto">' + '<input class="input" id="type' + i + '" value=\"' + data[i].type + '\"/>' + '</span>'
                                 table += '<span style="width: 15%;height: 100%;margin: auto">' + '<button class="button" id="edit' + i + '">Edit</button>' + '</span>'
                                 table += '<span style="width: 15%;height: 100%;margin: auto">' + '<button class="button" id="delete' + i + '">Delete</button>' + '</span>'
                                 table += foot
@@ -114,6 +115,7 @@
                                 document.getElementById('edit' + i).addEventListener("click", () => {
                                     let thisName = document.getElementById('name' + i).value
                                     let thisUrl = document.getElementById('url' + i).value
+                                    let thisType = document.getElementById('type' + i).value
                                     let thisId = data[i].id
                                     $.ajax({
                                         type: "post",
@@ -122,6 +124,7 @@
                                         data: {
                                             title: thisName,
                                             path: thisUrl,
+                                            type: thisType
                                         },
                                         success: function (res) {
                                             if (res.success === true) update()
