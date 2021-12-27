@@ -1,5 +1,4 @@
 import json
-
 from Classes import recources, valuedict, db, app, administrator, admin_dict
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import SQLAlchemyError
@@ -18,10 +17,10 @@ def getData():
     return juben, juben_cn, pic_cn, video_cn
 
 
-@app.route('/')
+@app.route('/', methods=['POST','GET'])
 def home():
-    # res = recources.query.filter_by(type_resources='剧本')
-    return render_template('home.html')
+    juben, juben_cn, pic_cn, video_cn = getData()
+    return render_template('home.html', juben = juben ,juben_cn = juben_cn, pic_cn = pic_cn, video_cn = video_cn)
 
 
 @app.route('/login')  # 对应登陆界面
@@ -44,22 +43,18 @@ def getAll():
     return jsonify(res)  # :please return {list:[{id:id,name:title,url:path}]}
 
 
-@app.route('/search', methods=['POST', 'GET'])
+@app.route('/search', methods=['POST','GET'])
 def search():
-    if request.method == 'POST':  # 判断是否是 POST 请求
-        # 获取表单数据
-        text = request.form.get('text')  # 传入表单对应输入字段的 name 值
-        # 验证数据
-        if text == "":
-            flash('Invalid input.')  # 显示错误提示
-            return redirect(url_for('home'))  # 重定向回主页
-            # 查询表单数据从数据库 result
-            juben, juben_cn, pic_cn, video_cn = getData()
-        return render_template('search.html')
-    return render_template('search.html')
-
-    # return redirect(url_for('home'))  # 重定向回主页
-
+    text = ""
+    if request.method == 'POST':  # 处理编辑表单的提交请求
+        text = request.form['text']
+    print(text)
+    results = recources.query.filter_by(title_resources=text)
+    for result in results:
+        if result.type_resources == '图片':
+            result.path_resources = 'static/images/'+ result.path_resources.split('\\')[-1]
+            # print(result.path_resources)
+    return render_template('search.html',results=results)
 
 @app.route('/admin')  # 对应登陆界面
 def real_login():

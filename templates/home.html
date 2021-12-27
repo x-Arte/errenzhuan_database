@@ -70,6 +70,7 @@
 				<ul class="nav navbar-nav navbar-right">
 					<li>
 						<div onclick="window.location.href= 'login';return false" class="admin-login-text">管理员登录</div>
+						<a class="btn" name="submit" href="{{ url_for('search' ) }}" target="_blank">搜索</a>
 					</li>
 				</ul>
 			</div>
@@ -86,39 +87,27 @@
 					<div class="description wow fadeInLeftBig" data-wow-duration="1.5s" data-wow-delay="2s">
 						<p>
 							<strong>二人转</strong>，史称小秧歌、双玩艺、蹦蹦，又称过口、双条边曲、风柳、春歌、半班戏、东北地方戏等。
-							是一种有着三百多年历史，悠远的原始文化传承的独具特色的民间艺术形式。下面的剧本数等还不是正确的数字，搜索框不会跳转（搞不明白了，好像在js/scirpts.js里面跳转有点毛病）。
+							是一种有着三百多年历史，悠远的原始文化传承的独具特色的民间艺术形式。
 						</p>
 					</div>
 					<div class="timer wow fadeInUp" data-wow-duration="1.5s" data-wow-delay="2.5s">
-						<div class="days-wrapper">
-							<span class="days"></span> <span class="t-text">剧本数 /</span>
+						<div class="day-wrapper">
+							<span class="day">{{juben_cn}}</span> <span class="t-text">剧本数 /</span>
 						</div>
-						<div class="hours-wrapper">
-							<span class="hours"></span> <span class="t-text">图片数 /</span>
+						<div class="hour-wrapper">
+							<span class="hour">{{pic_cn}}</span> <span class="t-text">图片数 /</span>
 						</div>
-						<div class="minutes-wrapper">
-							<span class="minutes"></span> <span class="t-text">视频数 /</span>
+						<div class="minute-wrapper">
+							<span class="minute">{{video_cn}}</span> <span class="t-text">视频数 /</span>
 						</div>
 					</div>
-					<div class="subscribe wow fadeInUp" data-wow-duration="1.5s" data-wow-delay="3s">
-						<form class="form-inline" role="form" method="post" action="search.html">
-							<div class="form-group">
-								<label class="sr-only" for="subscribe-email">Email address</label>
-								<input type="text" name="text" placeholder="查找你想要的内容" class="subscribe-email form-control" id="subscribe-email">
-							</div>
-							<button type="submit" class="btn" onclick="search.html">搜索</button>
 
-						</form>
-						<div class="success-message"></div>
-						<div class="error-message"></div>
-					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
 </div>
-
 <!-- More info -->
 <div class="features-container section-container">
 	<div class="container">
@@ -134,35 +123,59 @@
 					<span aria-hidden="true" class="icon_profile"></span>
 				</div>
 				<h3>剧本</h3>
-				<p>小拜年调
-					四丑闹春</p>
-				<p> 这里可以循环输出前5~6个剧本名字</p>
-			</div>
-			<div class="col-sm-3 features-box wow fadeInDown">
+				{% for i in juben %}
+				<p>{{i.title_resources}}</p>
+				{% endfor %}
+				</div>
+		<div class="col-sm-3 features-box wow fadeInUp">
 				<div class="features-box-icon">
 					<span aria-hidden="true" class="icon_pencil"></span>
 				</div>
 				<h3>图片</h3>
-				<p>我图片一不小心删掉了</p>
-			</div>
+			<div id = "pic_title"></div>
+      		<img src="../static/images/笑转东北情.jpeg" alt="" id="imgs">
+			<script>
+				var OneLinks = new Array(7);//图片数组
+				OneLinks[0] = "static/images/美人杯.jpeg";//给图片数组赋值，即变换时的图像值
+				OneLinks[1] = "static/images/苏三诉苦.jpeg";
+				OneLinks[2] = "static/images/西厢观画1 (1).jpeg";
+				OneLinks[3] = "static/images/西厢观画1 (2).jpeg";
+				OneLinks[4] = "static/images/西厢观画1 (3).jpeg";
+				OneLinks[5] = "static/images/香妃梦.jpeg";
+				OneLinks[6] = "static/images/笑转东北情.jpeg";
+				var id = function(el) {
+				return document.getElementById(el);
+				 };
+				p = id('imgs');
+				title = id('pic_title');
+				var i=0;
+				if(p){  marquee = function() {
+					var j=i%7;//以三个图片为例，循环
+					p.src = OneLinks[j];//将每次即将变换的图像值赋值给图片元素的src
+					 i++;
+				};
+				  speed = 3000;//变换的时间差，越大变换速度越慢
+				  var timer = setInterval(marquee, speed);
+				}
+			</script>
+		</div>
+
+
 			<div class="col-sm-3 features-box wow fadeInUp">
 				<div class="features-box-icon">
 					<span aria-hidden="true" class="icon_cogs"></span>
 				</div>
 				<h3>视频</h3>
-				<a href="https://www.bilibili.com/video/BV1HC4y1a7Sm?t=7.9">西厢观画 </a>
-				<p> 这里可以插入一个预览窗口</p>
+				<a href="https://www.bilibili.com/video/BV1HC4y1a7Sm?t=7.9" target="_blank">西厢观画 </a>
+				<video width="320" height="240" controls>
+					<source src="static/assets/二人转《西厢》选段---闫光明、赵海燕.mp4" type="video/mp4">
+				</video>
 			</div>
-			<div class="col-sm-3 features-box wow fadeInDown">
-				<div class="features-box-icon">
-					<span aria-hidden="true" class="icon_pin"></span>
-				</div>
-				<h3>不知道加啥</h3>
-				<p>etc。</p>
-			</div>
+
 		</div>
 	</div>
 </div>
+
 
 
 <!-- Javascript -->
