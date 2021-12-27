@@ -83,64 +83,67 @@
 
                 function update() {
 
-                    let data = [{id:'1',name:'name1',url:'http://233'},{id:'2',name:'name2',url:'http://233'},{id:'3',name:'name3',url:'http://233'}]
+                    //let data = [{id:'1',name:'name1',url:'http://233'},{id:'2',name:'name2',url:'http://233'},{id:'3',name:'name3',url:'http://233'}]
+                    let data = []
                     $.ajax({
-                                type: "get",
-                                url: "/api/getAll",
-                                success: function (res) {
-                                    console.log(res)
-                                    data = res.list//{list:[]}
-                                }
-                            })
-                    let table=''
+                        type: "get",
+                        url: "/api/getAll",
+                        success: function (res) {
+                            console.log(res)
+                            data = res.list//{list:[]}
+                            console.log(data)
+                            let table = ''
 
-                    const head1 = '<div class="row" style=\"background-color: #f0f0f0;display: flex;width: 100%\">'
-                    const head2 = '<div class="row" style=\"background-color: grey;display: flex;width: 100%\">'
-                    const foot = '</div>'
+                            const head1 = '<div class="row" style=\"background-color: #f0f0f0;display: flex;width: 100%\">'
+                            const head2 = '<div class="row" style=\"background-color: grey;display: flex;width: 100%\">'
+                            const foot = '</div>'
 
-                    for(let i = 0;i<data.length;i++) {
-                        table+=(i%2===1?head1:head2)
-                        table+='<span style="width: 28%;height: 100%;margin: 10px auto">'+'<input class="input" id="name'+i+'" style="margin: 0 auto" value=\"'+data[i].name+'\"/>'+'</span>'
-                        table+='<span style="width: 28%;height: 100%;margin: auto">'+'<input class="input" id="url'+i+'" value=\"'+data[i].url+'\"/>'+'</span>'
-                        table+='<span style="width: 15%;height: 100%;margin: auto">'+'<button class="button" id="edit'+i+'">Edit</button>'+'</span>'
-                        table+='<span style="width: 15%;height: 100%;margin: auto">'+'<button class="button" id="delete'+i+'">Delete</button>'+'</span>'
-                        table+=foot
-                    }
+                            console.log(data)
+                            for (let i = 0; i < data.length; i++) {
+                                table += (i % 2 === 1 ? head1 : head2)
+                                table += '<span style="width: 28%;height: 100%;margin: 10px auto">' + '<input class="input" id="name' + i + '" style="margin: 0 auto" value=\"' + data[i].name + '\"/>' + '</span>'
+                                table += '<span style="width: 28%;height: 100%;margin: auto">' + '<input class="input" id="url' + i + '" value=\"' + data[i].url + '\"/>' + '</span>'
+                                table += '<span style="width: 15%;height: 100%;margin: auto">' + '<button class="button" id="edit' + i + '">Edit</button>' + '</span>'
+                                table += '<span style="width: 15%;height: 100%;margin: auto">' + '<button class="button" id="delete' + i + '">Delete</button>' + '</span>'
+                                table += foot
+                            }
 
-                    document.getElementById('table').innerHTML=table
+                            document.getElementById('table').innerHTML = table
 
-                    for(let i = 0;i<data.length;i++) {
-                        document.getElementById('edit'+i).addEventListener("click", ()=>{
-                            let thisName = document.getElementById('name'+i).value
-                            let thisUrl = document.getElementById('url'+i).value
-                            let thisId = data[i].id
-                            $.ajax({
-                                type: "post",
-                                url: '/edit/'+thisId,
-                                dataType : "json",
-                                data: {
-                                    title:thisName,
-                                    path:thisUrl,
-                                },
-                                success: function (res) {
-                                    if(res.success === true) update()
-                                    else alert(res)
-                                }
-                            })
-                            //console.log('edit:'+thisId+';name:'+thisName+';url:'+thisUrl)
-                        })
-                        document.getElementById('delete'+i).addEventListener("click", ()=>{
-                            let thisId = data[i].id
-                            $.ajax({
-                                type: "post",
-                                url: '/delete/'+thisId,
-                                success: function (res) {
-                                    if(res.success === true) update()
-                                    else alert(res)
-                                }
-                            })
-                        })
-                    }
+                            for (let i = 0; i < data.length; i++) {
+                                document.getElementById('edit' + i).addEventListener("click", () => {
+                                    let thisName = document.getElementById('name' + i).value
+                                    let thisUrl = document.getElementById('url' + i).value
+                                    let thisId = data[i].id
+                                    $.ajax({
+                                        type: "post",
+                                        url: '/edit/' + thisId,
+                                        dataType: "json",
+                                        data: {
+                                            title: thisName,
+                                            path: thisUrl,
+                                        },
+                                        success: function (res) {
+                                            if (res.success === true) update()
+                                            else alert(res)
+                                        }
+                                    })
+                                    //console.log('edit:'+thisId+';name:'+thisName+';url:'+thisUrl)
+                                })
+                                document.getElementById('delete' + i).addEventListener("click", () => {
+                                    let thisId = data[i].id
+                                    $.ajax({
+                                        type: "post",
+                                        url: '/delete/' + thisId,
+                                        success: function (res) {
+                                            if (res.success === true) update()
+                                            else alert(res)
+                                        }
+                                    })
+                                })
+                            }
+                        }
+                    })
                 }
 
             </script>

@@ -3,7 +3,7 @@ import json
 from Classes import recources, valuedict, db, app, administrator, admin_dict
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import SQLAlchemyError
-from flask import request, url_for, redirect, flash, render_template
+from flask import request, url_for, redirect, flash, render_template, jsonify
 from flask import Flask
 from mypassword import pwd
 
@@ -16,13 +16,6 @@ def getData():
     pic_cn = recources.query.filter_by(type_resources='图片').count()
     video_cn = recources.query.filter_by(type_resources='视频').count()
     return juben, juben_cn, pic_cn, video_cn
-
-
-def getAllData():
-    data = recources.query.all()
-    for i in data:
-        print(i)
-    return data
 
 
 @app.route('/')
@@ -38,7 +31,17 @@ def login_page():
 
 @app.route('/api/getAll')
 def getAll():
-    return getAllData()  # :please return {list:[{id:id,title:title,url:path}]}
+    results = []
+    for id_resources,title_resources,path_resources in db.session.query(recources.id_resources,recources.title_resources,recources.path_resources).order_by(recources.id_resources):
+        tmp = {}
+        tmp['id'] = id_resources
+        tmp['name'] = title_resources
+        tmp['url'] = path_resources
+        #print(tmp)
+        results.append(tmp)
+    res = {'list': results}
+    print(res)
+    return jsonify(res)  # :please return {list:[{id:id,name:title,url:path}]}
 
 
 @app.route('/search', methods=['POST', 'GET'])

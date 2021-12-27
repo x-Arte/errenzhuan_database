@@ -21,6 +21,12 @@ class administrator(db.Model):
         for attr in admin_dict.keys():
             if admin_dict[attr]:
                 setattr(self, attr, admin_dict[attr])
+    def to_dict(self, admin_dict):
+        temp = admin_dict.copy()
+        temp["id_administrator"] = self.id_administrator
+        for attr in admin_dict.keys():
+            temp[attr] = getattr(self,attr)
+        return temp
 
 class recources(db.Model):
     __table_args__ = {'extend_existing': True}
@@ -151,6 +157,13 @@ class recources(db.Model):
             if valuedict[attr]:
                 setattr(self, attr, valuedict[attr])
 
+    def to_dict(self, valuedict):
+        temp = valuedict.copy()
+        temp["id_resources"] = self.id_resources
+        for attr in valuedict.keys():
+            temp[attr] = getattr(self, attr)
+        return temp
+
 admin_dict = {
     'name_administrator' :None,
     'paw_administrator' :None
@@ -274,4 +287,10 @@ valuedict = {
   'Acceptance_people' :None,
   'Acceptance_advice' :None,
   'Acceptance_report' :None
+}
+
+admin_res = {
+    'id_resources': 0,
+    'title_resources' : None,
+    'path_resources' :  None
 }
